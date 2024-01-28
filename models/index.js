@@ -7,20 +7,33 @@ const ProductTag = require('./ProductTag');
 
 Product.belongsTo(Category, {
   foreignKey: 'category_id',
+  onDelete: 'CASCADE',
 });
 
 
 Category.hasMany(Product, {
   foreignKey: 'category_id',
   onDelete: 'CASCADE',
-
+   
 });
 
-Product.belongsToMany(Tag, { through: ProductTag });
+Product.belongsToMany(Tag, { 
+  through: ProductTag,
+    foreignKey: 'product_id'
+   
+  });
 
-Tag.belongsToMany(Product, { through: ProductTag });
 
-// DO I HAVE TO ADD A KEY TO BELONGS TO MANY? 
+
+
+Tag.belongsToMany(Product, { 
+  through:  ProductTag,
+    foreignKey: 'tag_id' 
+  }
+
+);
+
+
 
 module.exports = {
   Product,
