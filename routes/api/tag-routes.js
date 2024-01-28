@@ -2,7 +2,8 @@ const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../models');
 
 
-
+// find all tags(DONE)
+  // be sure to include its associated Product data(DONE)
 router.get('/', async (req, res) => {
   try {
     const tagData = await Tag.findAll({
@@ -14,6 +15,10 @@ router.get('/', async (req, res) => {
   }
   });
 
+
+
+ // find a single tag by its `id`(DONE)
+  // be sure to include its associated Product data(DONE)
 router.get('/:id', async (req, res) => {
 try { 
   const tagData = await Tag.findByPk(req.params.id, {
@@ -30,6 +35,9 @@ try {
 }
 });
 
+
+
+ // create a new tag(DONE)
 router.post('/', async (req, res) => {
   try {
     const newTag = await Tag.create({
@@ -42,11 +50,13 @@ router.post('/', async (req, res) => {
   }
   });
 
+
+
+    // update a tag's name by its `id` value(DONE)
 router.put('/:id', async (req, res) => {
   try {
     const tagData = await Tag.update(req.params.id, {
       include:  [{ model: Product }],
-      // NOT SURE IF I SHOULD ADD THE PRODUCT
     })
     if (!tagData) {
       res.status(404).json({ message: 'No tag was found with that id!' });
@@ -59,6 +69,9 @@ router.put('/:id', async (req, res) => {
   }
   });
 
+
+
+   // delete on tag by its `id` value(DONE)
 router.delete('/:id', async (req, res) => {
   try {
     const tagData = await Tag.destroy({

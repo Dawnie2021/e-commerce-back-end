@@ -2,19 +2,25 @@ const router = require('express').Router();
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
 
-
+// find all products(DONE?)
+  // be sure to include its associated Category and Tag data(DONE)
 router.get('/', async (req, res) => {
   try {
     const productData = await Product.findAll({
       include: [{ model: Category }, { moodel: Tag}],
     });
-    res.status(200).json(libraryCardData);
+    res.status(200).json(productData);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
 
+
+
+
+ // find a single product by its `id`(DONE)
+  // be sure to include its associated Category and Tag data(DONE)
 router.get('/:id', async (req, res) => {
 try {
 const productData = await Product.findByPk(req.params.id, {
