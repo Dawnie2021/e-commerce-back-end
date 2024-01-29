@@ -7,14 +7,9 @@ const { Category, Product, ProductTag } = require('../../models');
 router.get('/', async (req, res) => {
   try {
     const categoryData = await Category.findAll({
-      include: [
-        {
-        Product,
-        through: ProductTag
-        }
-      ],
+      include: [ { model: Product, }],
     });
-    res.status(200).json(CategoryData);
+    res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -72,7 +67,7 @@ router.delete('/:id', async (req, res) => {
 
   const allCategories = await Category.destroy({
     where: {
-      category_id: req.params.category_id,
+      id: req.params.id,
     },
   });
 
