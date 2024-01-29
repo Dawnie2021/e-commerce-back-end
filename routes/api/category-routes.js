@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Category, Product } = require('../../models');
+const { Category, Product, ProductTag } = require('../../models');
 
 
  // find all categories(DONE)
@@ -7,7 +7,12 @@ const { Category, Product } = require('../../models');
 router.get('/', async (req, res) => {
   try {
     const categoryData = await Category.findAll({
-      include: [{ model: Product}],
+      include: [
+        {
+        Product,
+        through: ProductTag
+        }
+      ],
     });
     res.status(200).json(CategoryData);
   } catch (err) {

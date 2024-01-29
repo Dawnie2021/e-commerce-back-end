@@ -3,16 +3,14 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 
 // find all products(DONE?)
-  // be sure to include its associated Category and Tag data(DONE)
+// be sure to include its associated Category and Tag data(DONE)
 router.get('/', async (req, res) => {
   try {
     const productData = await Product.findAll({
       include: [
-        Category, 
-        {
-          model: Tag,
-          through: ProductTag
-        }
+        Category,
+
+
       ],
     });
     res.status(200).json(productData);
@@ -25,22 +23,22 @@ router.get('/', async (req, res) => {
 
 
 
- // find a single product by its `id`(DONE)
-  // be sure to include its associated Category and Tag data(DONE)
+// find a single product by its `id`(DONE)
+// be sure to include its associated Category and Tag data(DONE)
 router.get('/:id', async (req, res) => {
-try {
-const productData = await Product.findByPk(req.params.id, {
-  include: [{ model: Category }, { moodel: Tag}],
-})
-if (!productData) {
-  res.status(404).json({ message: 'No product found with that id!' });
-  return;
-}
+  try {
+    const productData = await Product.findByPk(req.params.id, {
+      include: [{ model: Category }, { moodel: Tag }],
+    })
+    if (!productData) {
+      res.status(404).json({ message: 'No product found with that id!' });
+      return;
+    }
 
-res.status(200).json(productData);
-} catch (err) {
-res.status(500).json(err);
-}
+    res.status(200).json(productData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 
 });
 
@@ -75,7 +73,7 @@ router.post('/', async (req, res) => {
 // update product
 router.put('/:id', async (req, res) => {
   try {
-    const product = await Product.findByPk(req.params.id, { 
+    const product = await Product.findByPk(req.params.id, {
       include: [Tag],
     });
     // update product data
@@ -86,7 +84,7 @@ router.put('/:id', async (req, res) => {
     }
     await product.save();
     await product.reload();
-    return  res.status(200).json(product);
+    return res.status(200).json(product);
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
@@ -101,14 +99,14 @@ router.delete('/:id', async (req, res) => {
       },
     });
     if (!productData) {
-      res.status(404).json({ message: 'No product found with that id!'});
+      res.status(404).json({ message: 'No product found with that id!' });
       return;
     }
     res.status(200).json(productData);
   } catch (err) {
     res.status(500).json(err);
   }
-  }
+}
 
 );
 
