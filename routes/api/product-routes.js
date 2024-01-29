@@ -7,7 +7,13 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', async (req, res) => {
   try {
     const productData = await Product.findAll({
-      include: [{ model: Category }, { moodel: Tag}],
+      include: [
+        Category, 
+        {
+          model: Tag,
+          through: ProductTag
+        }
+      ],
     });
     res.status(200).json(productData);
   } catch (err) {
@@ -42,8 +48,8 @@ res.status(500).json(err);
 
 // create new product
 router.post('/', async (req, res) => {
-  /* req.body should look like this...
-    {
+  /* req.body should look like this.
+  {
       product_name: "Basketball",
       price: 200.00,
       stock: 3,
